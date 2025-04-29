@@ -43,7 +43,7 @@ public class MenuService {
         List<MenuEntity> menuEntities = findAllMenuEntityBean.exec();
         List<RequestUpdateMenuDto> menuDtos = new ArrayList<>();
         for(MenuEntity menuEntity: menuEntities){
-            menuDtos.add(RequestUpdateMenuDto.builder().menuEntity(menuEntity).build());
+            if(!menuEntity.isHasDelete()) menuDtos.add(RequestUpdateMenuDto.builder().menuEntity(menuEntity).build());
         }
         return menuDtos;
     }
