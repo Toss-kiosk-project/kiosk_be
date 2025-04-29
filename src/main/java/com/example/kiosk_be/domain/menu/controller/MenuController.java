@@ -39,4 +39,15 @@ public class MenuController {
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> getMenu(@RequestParam("menuId") UUID menuId){
+        Map<String, Object> response = new HashMap<>();
+
+        RequestUpdateMenuDto requestUpdateMenuDto= menuService.findById(menuId);
+        response.put("menuInfo",requestUpdateMenuDto);
+        response.put("message", "메뉴 조회 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }

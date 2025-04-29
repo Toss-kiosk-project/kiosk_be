@@ -19,6 +19,7 @@ public class MenuService {
     private final CreateMenuEntityBean createMenuEntityBean;
     private final SaveMenuEntityBean saveMenuEntityBean;
     private final UpdateMenuEntityBean updateMenuEntityBean;
+    private final FindByIdMenuEntityBean findByIdMenuEntityBean;
 
     public UUID createMenu(RequestCreateMenuDto requestCreateMenuDto){
         MenuEntity menuEntity = createMenuEntityBean.exec(requestCreateMenuDto);
@@ -33,4 +34,8 @@ public class MenuService {
 
     }
 
+    public RequestUpdateMenuDto findById(UUID id){
+       MenuEntity menuEntity= findByIdMenuEntityBean.exec(id);
+        return RequestUpdateMenuDto.builder().menuEntity(menuEntity).build();
+    }
 }
