@@ -6,6 +6,7 @@ import com.example.kiosk_be.domain.order.data.dto.RequestGetOrderDto;
 import com.example.kiosk_be.domain.order.data.dto.RequestUpdateOrderStateDto;
 import com.example.kiosk_be.domain.order.data.dto.ResponseGetOrderDto;
 import com.example.kiosk_be.domain.order.service.OrderService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,16 @@ public class OrderController {
 
         response.put("orderList",orderService.getAllOrders());
         response.put("message", "주문 전체 조회 완료!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/code")
+    public ResponseEntity<Map<String, Object>> getOrderCode(@RequestParam("orderId") UUID orderId) {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("orderCode", orderService.getOrderCode(orderId));
+        response.put("message", "주문 코드 조회 완료!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

@@ -9,6 +9,7 @@ import com.example.kiosk_be.domain.order.data.dto.RequestCreateOrderDto;
 import com.example.kiosk_be.domain.order.data.dto.RequestGetOrderDto;
 import com.example.kiosk_be.domain.order.data.dto.RequestUpdateOrderStateDto;
 import com.example.kiosk_be.domain.order.data.dto.ResponseGetOrderDto;
+import com.example.kiosk_be.domain.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,10 @@ public class OrderService {
             responseGetOrderDtos.add(ResponseGetOrderDto.builder().orderEntity(orderEntity).build());
         }
         return responseGetOrderDtos;
+    }
+
+    public int getOrderCode(UUID orderId){
+       OrderEntity orderEntity =  findByIdOrderEntityBean.exec(orderId);
+       return orderEntity.getCode();
     }
 }
