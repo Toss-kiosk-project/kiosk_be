@@ -1,6 +1,7 @@
 package com.example.kiosk_be.domain.menu.controller;
 
 import com.example.kiosk_be.domain.menu.data.dto.RequestCreateMenuDto;
+import com.example.kiosk_be.domain.menu.data.dto.RequestDeleteMenuDto;
 import com.example.kiosk_be.domain.menu.data.dto.RequestUpdateMenuDto;
 import com.example.kiosk_be.domain.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +60,16 @@ public class MenuController {
         List<RequestUpdateMenuDto> requestUpdateMenuDtoList = menuService.findAll();
         response.put("menuInfo",requestUpdateMenuDtoList);
         response.put("message", "메뉴 전체 조회 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteMenu(@RequestBody RequestDeleteMenuDto requestDeleteMenuDto) {
+        Map<String,Object> response = new HashMap<>();
+
+        menuService.deleteMenu(requestDeleteMenuDto.getMenuId());
+        response.put("message", "메뉴 삭제 성공!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
