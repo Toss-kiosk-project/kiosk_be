@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class CreateOrderEntityBean {
 
     public OrderEntity exec(RequestCreateOrderDto requestCreateOrderDto) {
         return OrderEntity.builder()
-                .id(requestCreateOrderDto.getUserId())
+                .id(UUID.randomUUID())
                 .state(State.READY)
                 .totalPrice(requestCreateOrderDto.getTotalPrice())
                 .code(orderRepository.findMaxCode().orElse(0) + 1)
