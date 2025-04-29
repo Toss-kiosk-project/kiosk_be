@@ -24,5 +24,9 @@ public class OrderEntity {
     private LocalDateTime orderTime;
     private UUID userId;
     private int menuNum;
+
+    public void updateState(State state){
+        this.state = state;
+    }
 }
 
