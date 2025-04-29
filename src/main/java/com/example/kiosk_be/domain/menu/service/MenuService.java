@@ -1,9 +1,12 @@
 package com.example.kiosk_be.domain.menu.service;
 
 import com.example.kiosk_be.domain.menu.bean.CreateMenuEntityBean;
+import com.example.kiosk_be.domain.menu.bean.FindByIdMenuEntityBean;
 import com.example.kiosk_be.domain.menu.bean.SaveMenuEntityBean;
+import com.example.kiosk_be.domain.menu.bean.UpdateMenuEntityBean;
 import com.example.kiosk_be.domain.menu.data.MenuEntity;
 import com.example.kiosk_be.domain.menu.data.dto.RequestCreateMenuDto;
+import com.example.kiosk_be.domain.menu.data.dto.RequestUpdateMenuDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +18,19 @@ import java.util.UUID;
 public class MenuService {
     private final CreateMenuEntityBean createMenuEntityBean;
     private final SaveMenuEntityBean saveMenuEntityBean;
+    private final UpdateMenuEntityBean updateMenuEntityBean;
 
     public UUID createMenu(RequestCreateMenuDto requestCreateMenuDto){
         MenuEntity menuEntity = createMenuEntityBean.exec(requestCreateMenuDto);
         saveMenuEntityBean.exec(menuEntity);
         return menuEntity.getId();
     }
+
+    public UUID updateMenu(RequestUpdateMenuDto requestUpdateMenuDto){
+        MenuEntity menuEntity = updateMenuEntityBean.exec(requestUpdateMenuDto);
+        saveMenuEntityBean.exec(menuEntity);
+        return menuEntity.getId();
+
+    }
+
 }
