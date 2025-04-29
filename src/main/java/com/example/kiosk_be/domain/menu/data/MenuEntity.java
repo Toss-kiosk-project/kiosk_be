@@ -22,4 +22,8 @@ public class MenuEntity {
     private int price;
     private String img;
     private boolean hasDelete;
+
+    public void deleteMenu() {
+        this.hasDelete = true;
+    }
 }

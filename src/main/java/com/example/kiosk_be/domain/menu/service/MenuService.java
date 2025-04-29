@@ -20,7 +20,6 @@ public class MenuService {
     private final UpdateMenuEntityBean updateMenuEntityBean;
     private final FindByIdMenuEntityBean findByIdMenuEntityBean;
     private final FindAllMenuEntityBean findAllMenuEntityBean;
-    private final DeleteMenuEntityBean deleteMenuEntityBean;
 
     public UUID createMenu(RequestCreateMenuDto requestCreateMenuDto){
         MenuEntity menuEntity = createMenuEntityBean.exec(requestCreateMenuDto);
@@ -50,6 +49,8 @@ public class MenuService {
     }
 
     public void deleteMenu(UUID id){
-        deleteMenuEntityBean.exec(id);
+        MenuEntity menuEntity = findByIdMenuEntityBean.exec(id);
+        menuEntity.deleteMenu();
+        saveMenuEntityBean.exec(menuEntity);
     }
 }
