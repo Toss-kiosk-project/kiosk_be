@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -47,6 +48,17 @@ public class MenuController {
         RequestUpdateMenuDto requestUpdateMenuDto= menuService.findById(menuId);
         response.put("menuInfo",requestUpdateMenuDto);
         response.put("message", "메뉴 조회 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, Object>> getAllMenu(){
+        Map<String,Object> response = new HashMap<>();
+
+        List<RequestUpdateMenuDto> requestUpdateMenuDtoList = menuService.findAll();
+        response.put("menuInfo",requestUpdateMenuDtoList);
+        response.put("message", "메뉴 전체 조회 성공!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

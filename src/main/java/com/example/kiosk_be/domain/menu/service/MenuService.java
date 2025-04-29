@@ -1,15 +1,14 @@
 package com.example.kiosk_be.domain.menu.service;
 
-import com.example.kiosk_be.domain.menu.bean.CreateMenuEntityBean;
-import com.example.kiosk_be.domain.menu.bean.FindByIdMenuEntityBean;
-import com.example.kiosk_be.domain.menu.bean.SaveMenuEntityBean;
-import com.example.kiosk_be.domain.menu.bean.UpdateMenuEntityBean;
+import com.example.kiosk_be.domain.menu.bean.*;
 import com.example.kiosk_be.domain.menu.data.MenuEntity;
 import com.example.kiosk_be.domain.menu.data.dto.RequestCreateMenuDto;
 import com.example.kiosk_be.domain.menu.data.dto.RequestUpdateMenuDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -20,6 +19,7 @@ public class MenuService {
     private final SaveMenuEntityBean saveMenuEntityBean;
     private final UpdateMenuEntityBean updateMenuEntityBean;
     private final FindByIdMenuEntityBean findByIdMenuEntityBean;
+    private final FindAllMenuEntityBean findAllMenuEntityBean;
 
     public UUID createMenu(RequestCreateMenuDto requestCreateMenuDto){
         MenuEntity menuEntity = createMenuEntityBean.exec(requestCreateMenuDto);
@@ -37,5 +37,14 @@ public class MenuService {
     public RequestUpdateMenuDto findById(UUID id){
        MenuEntity menuEntity= findByIdMenuEntityBean.exec(id);
         return RequestUpdateMenuDto.builder().menuEntity(menuEntity).build();
+    }
+
+    public List<RequestUpdateMenuDto> findAll(){
+        List<MenuEntity> menuEntities = findAllMenuEntityBean.exec();
+        List<RequestUpdateMenuDto> menuDtos = new ArrayList<>();
+        for(MenuEntity menuEntity: menuEntities){
+            menuDtos.add(RequestUpdateMenuDto.builder().menuEntity(menuEntity).build());
+        }
+        return menuDtos;
     }
 }
