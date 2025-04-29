@@ -49,8 +49,17 @@ public class OrderController {
 
         Map<String, Object> response = new HashMap<>();
         response.put("orderInfo", ResponseGetOrderDto.builder().orderEntity(orderEntity).build());
-        System.out.println(ResponseGetOrderDto.builder().orderEntity(orderEntity).build());
         response.put("message", "주문 단건 조회 완료!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, Object>> getAllOrder() {
+        Map<String, Object> response = new HashMap<>();
+
+        response.put("orderList",orderService.getAllOrders());
+        response.put("message", "주문 전체 조회 완료!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
