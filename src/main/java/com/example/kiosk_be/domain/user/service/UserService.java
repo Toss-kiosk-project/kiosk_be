@@ -18,9 +18,18 @@ public class UserService {
     private final SaveUserEntityBean saveUserEntityBean;
 
     public ResponseGetUserDto getUser(UUID userId) {
-        UserEntity userEntity=getUserEntityBean.exec(userId);
+        UserEntity userEntity = getUserEntityBean.exec(userId);
         saveUserEntityBean.exec(userEntity);
 
         return ResponseGetUserDto.builder().userEntity(userEntity).build();
+    }
+
+    public ResponseGetUserDto login(String email, String password) {
+        UserEntity userEntity = getUserEntityBean.exec(email);
+        if (userEntity.getPassword().equals(password)) {
+            return ResponseGetUserDto.builder().userEntity(userEntity).build();
+        } else {
+            return null;
+        }
     }
 }
