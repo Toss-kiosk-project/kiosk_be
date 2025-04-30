@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody RequestLoginDto requestLoginDto) {
-        ResponseGetUserDto userInfo = userService.login(requestLoginDto.getEmail(), requestLoginDto.getPassword());
+        ResponseGetUserDto userInfo = userService.login(requestLoginDto);
 
         Map<String, Object> response = new HashMap<>();
         response.put("userInfo", userInfo);
@@ -52,4 +53,14 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<Map<String, Object>> getAllUser() {
+        List<ResponseGetUserDto> userInfoList = userService.getAllUsers();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userList", userInfoList);
+        response.put("message", "유저 조회 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 }
