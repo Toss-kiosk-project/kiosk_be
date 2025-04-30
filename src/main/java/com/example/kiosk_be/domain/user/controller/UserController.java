@@ -2,6 +2,7 @@ package com.example.kiosk_be.domain.user.controller;
 
 import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
 import com.example.kiosk_be.domain.user.data.dto.RequestLoginDto;
+import com.example.kiosk_be.domain.user.data.dto.RequestUpdateUserDto;
 import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
 import com.example.kiosk_be.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -60,6 +61,17 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("userList", userInfoList);
         response.put("message", "유저 조회 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<Map<String, Object>> updateUser(@RequestBody RequestUpdateUserDto requestUpdateUserDto) {
+        ResponseGetUserDto userInfo = userService.updateUser(requestUpdateUserDto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userInfo", userInfo);
+        response.put("message", "유저 수정 성공!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }

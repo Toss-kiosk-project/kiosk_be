@@ -1,13 +1,11 @@
 package com.example.kiosk_be.domain.user.service;
 
-import com.example.kiosk_be.domain.user.bean.AddUserEntityBean;
-import com.example.kiosk_be.domain.user.bean.GetAllUserEntityBean;
-import com.example.kiosk_be.domain.user.bean.GetUserEntityBean;
-import com.example.kiosk_be.domain.user.bean.SaveUserEntityBean;
+import com.example.kiosk_be.domain.user.bean.*;
 import com.example.kiosk_be.domain.user.data.Role;
 import com.example.kiosk_be.domain.user.data.UserEntity;
 import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
 import com.example.kiosk_be.domain.user.data.dto.RequestLoginDto;
+import com.example.kiosk_be.domain.user.data.dto.RequestUpdateUserDto;
 import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
 import com.example.kiosk_be.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +22,7 @@ public class UserService {
     private final SaveUserEntityBean saveUserEntityBean;
     private final AddUserEntityBean addUserEntityBean;
     private final GetAllUserEntityBean getAllUserEntityBean;
+    private final UpdateUserEntityBean updateUserEntityBean;
 
     public ResponseGetUserDto getUser(UUID userId) {
         UserEntity userEntity = getUserEntityBean.exec(userId);
@@ -52,9 +51,16 @@ public class UserService {
         List<UserEntity> userList = getAllUserEntityBean.exec();
         List<ResponseGetUserDto> userDtoList = new ArrayList<>();
         for (UserEntity userEntity : userList) {
-            if(!userEntity.isHasDelete()) userDtoList.add(ResponseGetUserDto.builder().userEntity(userEntity).build());
+            if (!userEntity.isHasDelete()) userDtoList.add(ResponseGetUserDto.builder().userEntity(userEntity).build());
         }
 
         return userDtoList;
+    }
+
+    public ResponseGetUserDto updateUser(RequestUpdateUserDto requestUpdateUserDto) {
+        UserEntity userEntity = getUserEntityBean.exec(requestUpdateUserDto.getUserId());
+        UserEntity updatedUserEntity = updateUserEntityBean.exec(requestUpdateUserDto, userEntity);
+        saveUserEntityBean.exec(updatedUserEntity);
+        return ResponseGetUserDto.builder().userEntity(updatedUserEntity).build();
     }
 }
