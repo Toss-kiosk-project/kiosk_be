@@ -22,4 +22,8 @@ public class UserEntity {
     private String password;
     private String userName;
     private boolean hasDelete;
+
+    public void deleteUser() {
+        this.hasDelete = true;
+    }
 }

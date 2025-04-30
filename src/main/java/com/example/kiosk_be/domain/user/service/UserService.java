@@ -1,13 +1,11 @@
 package com.example.kiosk_be.domain.user.service;
 
 import com.example.kiosk_be.domain.user.bean.*;
-import com.example.kiosk_be.domain.user.data.Role;
 import com.example.kiosk_be.domain.user.data.UserEntity;
 import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
 import com.example.kiosk_be.domain.user.data.dto.RequestLoginDto;
 import com.example.kiosk_be.domain.user.data.dto.RequestUpdateUserDto;
 import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
-import com.example.kiosk_be.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -62,5 +60,11 @@ public class UserService {
         UserEntity updatedUserEntity = updateUserEntityBean.exec(requestUpdateUserDto, userEntity);
         saveUserEntityBean.exec(updatedUserEntity);
         return ResponseGetUserDto.builder().userEntity(updatedUserEntity).build();
+    }
+
+    public void deleteUser(UUID userId) {
+        UserEntity userEntity = getUserEntityBean.exec(userId);
+        userEntity.deleteUser();
+        saveUserEntityBean.exec(userEntity);
     }
 }

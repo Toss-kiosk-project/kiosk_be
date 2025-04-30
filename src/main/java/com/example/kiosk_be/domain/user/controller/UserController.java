@@ -1,9 +1,6 @@
 package com.example.kiosk_be.domain.user.controller;
 
-import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
-import com.example.kiosk_be.domain.user.data.dto.RequestLoginDto;
-import com.example.kiosk_be.domain.user.data.dto.RequestUpdateUserDto;
-import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
+import com.example.kiosk_be.domain.user.data.dto.*;
 import com.example.kiosk_be.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -72,6 +69,16 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         response.put("userInfo", userInfo);
         response.put("message", "유저 수정 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Map<String, Object>> deleteUser(@RequestBody RequestDeleteUserDto requestDeleteUserDto) {
+        userService.deleteUser(requestDeleteUserDto.getUserId());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "유저 삭제 성공!");
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
