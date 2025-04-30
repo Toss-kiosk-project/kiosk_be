@@ -1,9 +1,11 @@
 package com.example.kiosk_be.domain.user.service;
 
+import com.example.kiosk_be.domain.user.bean.AddUserEntityBean;
 import com.example.kiosk_be.domain.user.bean.GetUserEntityBean;
 import com.example.kiosk_be.domain.user.bean.SaveUserEntityBean;
 import com.example.kiosk_be.domain.user.data.Role;
 import com.example.kiosk_be.domain.user.data.UserEntity;
+import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
 import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
 import com.example.kiosk_be.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.UUID;
 public class UserService {
     private final GetUserEntityBean getUserEntityBean;
     private final SaveUserEntityBean saveUserEntityBean;
+    private final AddUserEntityBean addUserEntityBean;
 
     public ResponseGetUserDto getUser(UUID userId) {
         UserEntity userEntity = getUserEntityBean.exec(userId);
@@ -31,5 +34,12 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public ResponseGetUserDto addUser(RequestAddUserDto requestAddUserDto) {
+        UserEntity userEntity = addUserEntityBean.exec(requestAddUserDto);
+        saveUserEntityBean.exec(userEntity);
+
+        return ResponseGetUserDto.builder().userEntity(userEntity).build();
     }
 }

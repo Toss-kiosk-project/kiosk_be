@@ -1,5 +1,6 @@
 package com.example.kiosk_be.domain.user.controller;
 
+import com.example.kiosk_be.domain.user.data.dto.RequestAddUserDto;
 import com.example.kiosk_be.domain.user.data.dto.RequestLoginDto;
 import com.example.kiosk_be.domain.user.data.dto.ResponseGetUserDto;
 import com.example.kiosk_be.domain.user.service.UserService;
@@ -39,4 +40,16 @@ public class UserController {
         response.put("isSuccess", true);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> addUser(@RequestBody RequestAddUserDto requestAddUserDto) {
+        ResponseGetUserDto userInfo = userService.addUser(requestAddUserDto);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("userInfo", userInfo);
+        response.put("message", "유저 추가 성공!");
+        response.put("isSuccess", true);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
 }
