@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 // 공통된 /api/menu를 사용하기 때문에 붙여줌
 @RequestMapping("/api/menu")
